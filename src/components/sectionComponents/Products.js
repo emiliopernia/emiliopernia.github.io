@@ -44,7 +44,7 @@ const Products = ({ url }) => {
 
         {items.map((item) => {
           return (
-            <NavLink key={item.id} to={`/productos/` + item.id}>
+            <NavLink key={item.id} to={`/products/` + item.id}>
               <ActionAreaCard
                 title={item.title}
                 price={item.price}

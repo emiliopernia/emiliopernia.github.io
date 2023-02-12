@@ -13,6 +13,7 @@ const ShoppingCart = () => {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.value)
     const [total, setTotal] = useState(0);
+    
 
     useEffect(() => {
         let sum = 0;
@@ -25,11 +26,13 @@ const ShoppingCart = () => {
 
 
     const [ratingsTitle] = useState('Ratings: ')
-    const [emptyMsg] = useState('Tu cesta se encuentra vacia')
+    const [emptyMsg] = useState('Your shopping cart is empty')
     const [currency] = useState(' $ ')
-    const [continueShopping] = useState('continuar comprando')
-    const [goToPayment] = useState('comprar')
+    const [continueShopping] = useState('continue shopping')
+    const [goToPayment] = useState('buy')
     const [totalAmount] = useState(`total: ${currency}`)
+    const [title]= useState('My shopping cart')
+    
 
     const deleteFronCart = (id) =>{
         const filteredItems = cartItems.filter((cartItem)=>{
@@ -49,7 +52,7 @@ const ShoppingCart = () => {
                     alignItems: 'flex-start',
                     m: 4
                 }}>
-                    <Typography variant='h4' component='h2' sx={{ textTransform: 'uppercase' }}>mi cesta</Typography>
+                    <Typography variant='h4' component='h2' sx={{ textTransform: 'uppercase' }}>{title}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
                     {!cartItems ?
@@ -126,7 +129,7 @@ const ShoppingCart = () => {
 
 
                         <Button variant="contained" sx={{ width: '80%', m: 2 }}>
-                            <NavLink to='/productos'>
+                            <NavLink to='/products'>
                                 {continueShopping}
                             </NavLink>
                         </Button>
