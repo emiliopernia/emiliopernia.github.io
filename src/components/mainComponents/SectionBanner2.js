@@ -24,7 +24,6 @@ const SectionBanner2 = ({responsive}) => {
           : 
           <Box sx={{marginTop:'16px', width: '50%'}}>
 
-            {/* se puede solucionar el alineamiento con width???? */}
             <ButtonGroup variant='text' sx={{display:'flex', alignItems:'center', justifyConent:'center'}}>
             <Button sx={{textTransform:'uppercase'}}>facebook</Button>
             <Button sx={{textTransform:'uppercase'}}>instagram</Button>

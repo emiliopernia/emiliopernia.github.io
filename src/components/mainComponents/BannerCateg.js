@@ -1,9 +1,5 @@
 import { Box, ImageList } from '@mui/material'
 import { useState } from 'react'
-import image1 from '../../img/desktop-cat-bolsos.webp'
-import image2 from '../../img/desktop-cat-carteras.webp'
-import image3 from '../../img/desktop-cat-viajes.webp'
-import image4 from '../../img/desktop-cat-hombre.webp'
 import CatBannerCard from '../styledComponent/CatBannerCard'
 
 const BannerCateg = ({ responsive }) => {
@@ -22,6 +18,7 @@ const BannerCateg = ({ responsive }) => {
                 flexDirection: 'row', 
                 flexWrap: 'Wrap', 
                 width: '100%',
+                p:1,
                 justifyContent: 'space-around'
             }}>
                 {bannerCategories.map((cat)=>{

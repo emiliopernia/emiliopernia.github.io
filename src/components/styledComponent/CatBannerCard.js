@@ -1,6 +1,7 @@
-import {ImageListItem, ImageListItemBar, styled } from '@mui/material'
+import {ImageListItem, ImageListItemBar, styled } from '@mui/material';
 
 const CatBannerCard = ({ item,responsive }) => {
+
 
 
         const BannerImage = styled('img')(() => ({
@@ -11,7 +12,7 @@ const CatBannerCard = ({ item,responsive }) => {
 
         return (
     
-            <ImageListItem sx={{width: (responsive.desk) ? '20%' : '45%',
+            <ImageListItem sx={{ width: (responsive.desk) ? '20%' : '45%',
             p:1,
             boxShadow: '0px 5px 5px -3px rgb(0 0 0 / 20%), 0px 8px 10px 1px rgb(0 0 0 / 14%), 0px 3px 14px 2px rgb(0 0 0 / 12%)',
             borderRadius: '4px'
@@ -23,7 +24,7 @@ const CatBannerCard = ({ item,responsive }) => {
                         textAlign: 'center',
                         textTransform: 'uppercase',
                         bottom: '50%',
-                        background: 'rgba(200, 200, 205, 0.4)',
+                        background: 'rgba(80, 80, 80, 0.4)',
                         '&>.MuiImageListItemBar-titleWrap': {
                             fontWeight: 'bolder',
                             fontFamily: 'Miller Bold',
