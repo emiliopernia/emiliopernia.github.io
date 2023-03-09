@@ -9,7 +9,11 @@ import Men from './components/sectionComponents/Men'
 import Products from './components/sectionComponents/Products'
 import ItemInfoPage from './components/styledComponent/ItemInfoPage'
 import ShoppingCart from './components/sectionComponents/ShoppingCart'
+import BreadcrumbsContainer from './components/BreadcrumbsContainer'
 
+import Subscribe from './components/sectionComponents/Subscribe'
+import UserPage from './components/sectionComponents/UserPage'
+import Login from './components/sectionComponents/Login'
 import { Routes, Route } from 'react-router-dom'
 import CssBaseline from '@mui/material/CssBaseline'
 import { Box, useMediaQuery, useTheme } from '@mui/material'
@@ -18,7 +22,7 @@ import { Box, useMediaQuery, useTheme } from '@mui/material'
 function App() {
 
   const url = 'https://fakestoreapi.com/products'
-  //aca declaro el responsive. Lo paso como props
+  //declare responsive breackpoints:
   const theme = useTheme();
   const mobile = useMediaQuery(theme.breakpoints.down('sm'));
   const tablet = useMediaQuery(theme.breakpoints.between('sm', 'md'));
@@ -33,6 +37,7 @@ function App() {
     <Box id='html' sx={{width:'100%'}}>
       <CssBaseline />
       <Header responsive={responsive} />
+      <BreadcrumbsContainer/>
       <Routes>
         <Route path='/' element={<Main responsive={responsive} />} />
         <Route path='/home' element={<Main responsive={responsive} />} />
@@ -41,8 +46,12 @@ function App() {
         <Route path='/accesories' element={<Accesories/>}/>
         <Route path='/men' element={<Men/>}/>
         <Route path='/products' element={<Products url={url}/>}/>
-        <Route path={`/products/:id`} element={<ItemInfoPage responsive={responsive}/>}/>
+        <Route path={`/products/:id`} element={<ItemInfoPage responsive={responsive} url={url}/>}/>
         <Route path={`/cart`} element={<ShoppingCart/>}/>
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/subscribe' element={<Subscribe/>}/>
+        <Route path='/user' element={<UserPage/>}/>
+        
         
       </Routes>
       <Footer responsive={responsive} />

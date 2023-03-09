@@ -1,7 +1,16 @@
 import { Card,Box,Typography,Grid,CardMedia,Button } from "@mui/material"
 import StarBorderIcon from '@mui/icons-material/StarBorder';
+import Counter from "./Counter";
+import { useState } from "react";
 
 const ItemCardDesk = ({item,addToCart,currency}) => {
+
+    const [newItem,setNewItem]=useState(item)
+
+  const setUnitsOfItem = (itemUpdated)=>{
+    setNewItem(itemUpdated)
+  }
+
   return (
     <Card sx={{ height: '800px', p: 2 }}>
                 <Box sx={{ height: '5%' }}>
@@ -33,7 +42,7 @@ const ItemCardDesk = ({item,addToCart,currency}) => {
                         </Card>
                     </Grid>
                     <Grid item xs={6}>
-                        <Box sx={{ height: '100%' }}>
+                        <Box sx={{ height: '100%', display:'flex', flexDirection:'column' }}>
                             <Box sx={{ height: '35%', mb: 2 }}>
                                 <Typography variant="h3" component="div">{item.title}</Typography>
                             </Box>
@@ -45,10 +54,10 @@ const ItemCardDesk = ({item,addToCart,currency}) => {
                                     </Typography>
                                     <StarBorderIcon color='warning' />
                                 </Box>
-
-                                <Button variant="contained" color='success' onClick={() => addToCart(item)} >Add to cart</Button>
+                                <Counter max={item.max} item={item} passUnits={setUnitsOfItem}/>
+                                <Button variant="contained" color='success' onClick={() => addToCart(newItem)} >Add to cart</Button>
                             </Box>
-                            <Box sx={{ height: '30%', mb: 2, display: 'flex', flexDirection: 'column' }}>
+                            <Box sx={{ height: '40%', mb: 2, display: 'flex', flexDirection: 'column',mt:2 }}>
                                 <Typography variant="h5">Description:</Typography>
                                 <Typography variant="body">{item.description}</Typography>
                             </Box>

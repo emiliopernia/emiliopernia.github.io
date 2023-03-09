@@ -7,8 +7,9 @@ import { ShoppingBagOutlined, PersonOutlineOutlined, FavoriteBorderOutlined } fr
 import { useToggle } from "../../hooks/useToggle";
 import ScrollMenu from "../styledComponent/ScrollMenu";
 import NavLink from "../styledComponent/NavLink";
+import UserMenu from '../styledComponent/UserMenu';
 
-const HeaderTablet = ({ title, navMenu, cartItemsSize }) => {
+const HeaderTablet = ({ title, navMenu, cartItemsSize,responsive, user }) => {
 
     const { status: openSearch, toggleStatus } = useToggle(false)
 
@@ -35,7 +36,7 @@ const HeaderTablet = ({ title, navMenu, cartItemsSize }) => {
                                     <SearchIcon />
                                 </IconButton>
                                 :
-                                <SearchBar toggleStatus={() => toggleStatus(false)} />
+                                <SearchBar responsive={responsive} toggleStatus={() => toggleStatus(false)} />
                             }
                         </Box>
                     </Grid>
@@ -56,9 +57,7 @@ const HeaderTablet = ({ title, navMenu, cartItemsSize }) => {
                                     </IconButton>
                                 </ListItem>
                                 <ListItem>
-                                    <IconButton>
-                                        <PersonOutlineOutlined />
-                                    </IconButton>
+                                <UserMenu user={user}/>
                                 </ListItem>
                                 <ListItem>
                                     <Box sx={{ display: 'flex' }}>

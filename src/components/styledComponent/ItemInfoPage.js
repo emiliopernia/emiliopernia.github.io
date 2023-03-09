@@ -12,45 +12,59 @@ import { cartItems } from '../../features/cart';
 import ItemCardMobile from './ItemCardMobile';
 
 
-const ItemInfoPage = ({responsive}) => {
+const ItemInfoPage = ({ responsive, url }) => {
 
-    const items = useSelector((state)=>state.items.value)
-    const itemsAddedToCart = useSelector((state)=>state.cart.value)
-    const dispatch=useDispatch();
+
+    const items = useSelector((state) => state.items.value)
+    const itemsAddedToCart = useSelector((state) => state.cart.cartItems)
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-
-    const itemId = useParams();
-    const [item, setItem] = useState(null)
-    
     const [currency] = useState('$')
+    const itemId = useParams();
+    const [id] = useState(itemId.id)
+    const [item, setItem] = useState(null) 
 
     const addToCart = (item) => {
-        const exists = itemsAddedToCart.find((product)=>{return Number(product.id)===Number(item.id)})
-        if(exists){
+        const exists = itemsAddedToCart.find((product) => { return Number(product.id) === Number(item.id) })
+        if (exists) {
             alert('PRODUCTO YA SELECCIONADO (de momento no se controlan cantidades ni se compra mas de una unidad. En desarrollo')
-        }else{
+        } else {
             dispatch(cartItems(item));
             navigate('/cart')
         }
-        
     }
 
     useEffect(() => {
-        setItem(items.find(item=>item.id===Number(itemId.id)))
-    }, [itemId,item])
+        if (items.length === 0) {
+            fetchItem(id)
+        }
+        else {
+            setItem(items.find(item => item.id === Number(id)))
+        }
+    }, [id,items])
 
+    async function fetchItem(id) {
+        try {
+          const res = await fetch(`${url}/${id}`);
+          if (!res.ok) throw new Error('Network response was not ok');
+          const item = await res.json();
+          setItem({ ...item, max: 4, size: { small: 's', medium: 'm', large: 'l', extraLarge: 'xl' }, cartQuantity: 1 });
+        } catch (err) {
+          console.log(err);
+        }
+      }
 
-    if (item&& responsive.desk) {
+    if (item && responsive.desk) {
         return (
-            <ItemCardDesk item={item} addToCart={addToCart} currency={currency}/>
+            <ItemCardDesk item={item} addToCart={addToCart} currency={currency} />
         )
-    }else if (item){
+    } else if (item) {
         return (
-            <ItemCardMobile item={item} addToCart={addToCart} currency={currency}/>
-            )
+            <ItemCardMobile item={item} addToCart={addToCart} currency={currency} />
+        )
     }
-     else {
-        return <LoadingBar/>
+    else {
+        return <LoadingBar />
     }
 
 

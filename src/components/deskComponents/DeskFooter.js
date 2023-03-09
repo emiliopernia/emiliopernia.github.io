@@ -49,7 +49,9 @@ const DeskFooter = ({ selectCountry, selected, allOptions, onChange, trademark,t
             <StyledList key={option} sx={{width:'18%'}}>
               {option.map((value, index) => {
 
-                return <StyledListItem key={index}>
+                return <StyledListItem key={index} sx={{'&:hover': {
+                  cursor: 'pointer',
+                },}}>
                   <ListItemText primary={value} />
                 </StyledListItem>
 

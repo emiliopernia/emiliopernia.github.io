@@ -3,11 +3,12 @@ import { AppBar, Toolbar, IconButton, Typography, List, ListItem, Grid } from "@
 import { Box } from "@mui/system";
 import { ShoppingBagOutlined, PersonOutlineOutlined, FavoriteBorderOutlined } from '@mui/icons-material'
 import NavLink from "../styledComponent/NavLink";
+import UserMenu from '../styledComponent/UserMenu';
 
 
 
 
-const HeaderMobile = ({ title, navMenu, cartItemsSize }) => {
+const HeaderMobile = ({ title, navMenu, cartItemsSize,user }) => {
 
 
 
@@ -46,9 +47,7 @@ const HeaderMobile = ({ title, navMenu, cartItemsSize }) => {
                                     </IconButton>
                                 </ListItem>
                                 <ListItem>
-                                    <IconButton>
-                                        <PersonOutlineOutlined />
-                                    </IconButton>
+                                    <UserMenu user={user} />
                                 </ListItem>
                                 <ListItem>
                                     <Box sx={{ display: 'flex' }}>

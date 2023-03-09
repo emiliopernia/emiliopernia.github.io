@@ -22,6 +22,7 @@ const Products = ({ url }) => {
         dispatch(getItems(data))
       } catch (err) {
         console.log(err)
+        throw err
       }
     }
     getData();
@@ -31,17 +32,21 @@ const Products = ({ url }) => {
   const fetchList = async () => {
     try {
       let res = await fetch(url);
+      if (!res.ok) {
+        throw new Error('Failed to fetch data')
+      }
       let list = await res.json();
       return list;
     } catch (err) {
       console.log('error:' + err)
+      throw err
     }
   }
 
   if (items.length > 0) {
     return (
       <Box sx={{ display: "flex", flexDirection: "row", flexWrap: "wrap", justifyContent: 'space-around' }}>
-
+        
         {items.map((item) => {
           return (
             <NavLink key={item.id} to={`/products/` + item.id}>

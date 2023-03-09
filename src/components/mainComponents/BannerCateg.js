@@ -22,7 +22,6 @@ const BannerCateg = ({ responsive }) => {
                 justifyContent: 'space-around'
             }}>
                 {bannerCategories.map((cat)=>{
-                    console.log(cat.image)
                     return (<CatBannerCard key={cat.title} item={cat} responsive={responsive}/>)
                 })}                
             </ImageList>

@@ -1,19 +1,17 @@
-
+import React from 'react';
 import { Accordion, AccordionDetails, AccordionSummary, List, ListItem, ListItemText, Typography, FormControl, Box, InputLabel, Select, MenuItem } from '@mui/material'
 import CopyrightIcon from '@mui/icons-material/Copyright';
 import AddIcon from '@mui/icons-material/Add'; 
 import RemoveIcon from '@mui/icons-material/Remove';
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 const MobileFooter = ({ selectCountry, selected, allOptions, onChange, trademark,tmDescription  }) => {
-
+    //const { status: expanded, toggleStatus } = useToggle(false)
     const [expanded, setExpanded] = useState(false);
 
-    const handleChange = (acor) => (event, isExpanded) => {
-        
+    const handleChange = useCallback((acor) => (event, isExpanded) => {
         setExpanded(isExpanded ? acor : false);
-       
-    };
+      }, [setExpanded]);
 
     return (
         <Box sx={{ margin: '72px 0' }}>
@@ -38,7 +36,6 @@ const MobileFooter = ({ selectCountry, selected, allOptions, onChange, trademark
 
             {allOptions.map((options, i) => {
                 return (
-
                     <Accordion key={i}
                         sx={{ backgroundColor: 'none'}}
                         expanded={expanded === 'ALGO'+i} 
@@ -56,7 +53,7 @@ const MobileFooter = ({ selectCountry, selected, allOptions, onChange, trademark
                                                 <ListItemText primary={value} sx={{ textAlign: 'left' }} />
                                             </ListItem>
                                         )
-                                    }else return <></>
+                                    }else return <React.Fragment key={i}/>
                                 })}
 
                             </List>

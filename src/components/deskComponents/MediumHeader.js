@@ -1,15 +1,15 @@
 import { Typography, List, ListItem, IconButton, Grid,Box } from '@mui/material'
 import {
-  SearchOutlined, LocationOnOutlined, LocalPostOfficeOutlined, ShoppingBagOutlined,
-  PersonOutlineOutlined, FavoriteBorderOutlined
+  SearchOutlined, LocationOnOutlined, LocalPostOfficeOutlined, ShoppingBagOutlined, FavoriteBorderOutlined
 } from '@mui/icons-material'
 import { useToggle } from '../../hooks/useToggle';
 import SearchBar from '../styledComponent/SearchBar';
 import NavLink from '../styledComponent/NavLink';
+import UserMenu from '../styledComponent/UserMenu';
 
 
 
-const MediumHeader = ({ title,cartItemsSize }) => {
+const MediumHeader = ({ title,cartItemsSize,responsive,user }) => {
 
   const { status: openSearch, toggleStatus } = useToggle(false)
 
@@ -39,7 +39,7 @@ const MediumHeader = ({ title,cartItemsSize }) => {
             </ListItem>
           </List>
           :
-          <SearchBar toggleStatus={() => toggleStatus(false)} />
+          <SearchBar responsive={responsive} toggleStatus={() => toggleStatus(false)} />
         }
       </Grid>
 
@@ -63,9 +63,7 @@ const MediumHeader = ({ title,cartItemsSize }) => {
             </IconButton>
           </ListItem>
           <ListItem>
-            <IconButton>
-              <PersonOutlineOutlined />
-            </IconButton>
+            <UserMenu user={user}/>
           </ListItem>
           <ListItem>
             <Box sx={{display:'flex'}}>

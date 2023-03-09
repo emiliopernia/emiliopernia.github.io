@@ -1,72 +1,80 @@
 import { Button, Card, IconButton, Typography, CardMedia, Box } from "@mui/material"
-import { useEffect, useState } from 'react';
-import StarBorderIcon from '@mui/icons-material/StarBorder';
+import { useEffect, useState, useCallback } from 'react';
 import NavLink from '../styledComponent/NavLink';
 import DeleteIcon from '@mui/icons-material/Delete'
 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { deleteItem } from '../../features/cart';
+import { deleteItem,modifyItem } from '../../features/cart';
+import Counter from "../styledComponent/Counter";
 
 const ShoppingCart = () => {
 
     const dispatch = useDispatch();
-    const cartItems = useSelector((state) => state.cart.value)
+    const cartItems = useSelector((state) => state.cart.cartItems)
     const [total, setTotal] = useState(0);
-    
-
-    useEffect(() => {
-        let sum = 0;
-        cartItems.map((item) => {
-            sum += Number(item.price);
-        })
-        setTotal(sum.toFixed(2))
-    }, [cartItems])
-
-
-
-    const [ratingsTitle] = useState('Ratings: ')
     const [emptyMsg] = useState('Your shopping cart is empty')
     const [currency] = useState(' $ ')
     const [continueShopping] = useState('continue shopping')
     const [goToPayment] = useState('buy')
     const [totalAmount] = useState(`total: ${currency}`)
     const [title]= useState('My shopping cart')
-    
 
-    const deleteFronCart = (id) =>{
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                let sum = cartItems.reduce((acc, item) => {
+                    return acc + Number(item.price * item.cartQuantity);
+                }, 0);
+                setTotal(sum.toFixed(2));
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchData();
+    }, [cartItems])
+
+    const deleteFronCart = useCallback((id) =>{
         const filteredItems = cartItems.filter((cartItem)=>{
-            console.log(cartItem.id,id)
             return Number(cartItem.id)!==id
         })
         dispatch(deleteItem(filteredItems))
-    }
+    }, [cartItems, dispatch]);
+
+    const setUnitsOfItem = useCallback((newItem)=>{
+        dispatch(modifyItem(newItem))
+      }, [dispatch]);
+
 
     return (
         <Box sx={{ minHeight: '800px' }}>
-            <Card>
+         
+            <Card sx={{p:2}}>
                 <Box sx={{
                     display: 'flex',
                     justifyContent: 'center',
                     flexDirection: 'column',
                     alignItems: 'flex-start',
-                    m: 4
+                    m: 2,
                 }}>
                     <Typography variant='h4' component='h2' sx={{ textTransform: 'uppercase' }}>{title}</Typography>
                 </Box>
                 <Box sx={{ display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems: 'center' }}>
-                    {!cartItems ?
-                        <Typography>{emptyMsg}</Typography>
+                    {cartItems.length === 0 ?
+                        <Typography sx={{ mt: 2, color: 'red' }}>{emptyMsg}</Typography>
                         :
                         cartItems.map((item) => {
                             return (
-                                <CardMedia raised sx={{
-                                    border: 'solid 2px #ccc',
-                                    borderRadius: 2,
-                                    height: '200px',
+                                <CardMedia 
+                                raised 
+                                key={item.id}
+                                sx={{
+                                    border: '1px solid grey',
+                                    borderRadius: 1,
+                                    height: '220px',
                                     m: 2,
                                     p: 1,
-                                    width: '90%',
+                                    width:'100%',
                                     display: 'flex',
                                     flexFlow: 'row noWrap',
                                     justifyContent: 'space-between'
@@ -96,12 +104,10 @@ const ShoppingCart = () => {
                                         </Box>
                                         <Box sx={{ height: '20%', mb: 1 }}>
                                             <Typography variant='h6' sx={{ mb: 1.5 }} >{currency} {item.price}</Typography>
-                                            <Box sx={{ display: 'flex', flecFlow: 'row noWrap', alignContent: 'center', mb: 1 }}>
-                                                <Typography variant='subtitle2'
-                                                    sx={{ p: '1px' }} >{ratingsTitle}{item.rating.rate}
-                                                </Typography>
-                                                <StarBorderIcon color='warning' />
-                                            </Box>
+                                            <Counter 
+                                            max={item.max} 
+                                            item={item}
+                                            passUnits={setUnitsOfItem}/>
                                         </Box>
                                     </Box>
                                     <Box sx={{ width: '10%',mr:0.5 }}>
@@ -119,7 +125,7 @@ const ShoppingCart = () => {
 
                     }
                 </Box>
-                <Box sx={{ border: 'solid 2px black', m: 3, borderRadius: 2 }}>
+                <Box sx={{ border: 'solid 2px black', m:'24px 0', borderRadius: 2 }}>
                     <Box sx={{
                         display: 'flex',
                         justifyContent: 'center',

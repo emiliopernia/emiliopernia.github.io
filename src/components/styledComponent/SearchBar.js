@@ -1,56 +1,75 @@
 import { useState } from 'react';
-import { TextField, InputAdornment } from '@mui/material';
+import { Autocomplete, TextField } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
+const SearchBar = ({ toggleStatus,responsive }) => {
+  const [value, setValue] = useState(null);
+  const [isFocused, setIsFocused] = useState(false);
 
-const SearchBar = ({toggleStatus}) => {
-    
-    const [searchTextField, setSearchTextField] = useState('');
+  function handleSearch() {
+    console.log(value); // This would be calling the search function
+    setValue(null);
+    toggleStatus();
+  }
 
-    function handleClickSearch(value) {
-        console.log(value);//this would be calling the search function
-        setSearchTextField('');
-        toggleStatus();
-      }
-
-    return (
+  return (
+    <Autocomplete
+      fullWidth
+      value={value}
+      onChange={(e, newValue) => {
+        setValue(newValue);
+      }}
+      onKeyPress={(e) => {
+        if (e.key === 'Enter') {
+          handleSearch();
+        }
+      }}
+      options={[]}
+      open={isFocused}
+      onOpen={() => {
+        setIsFocused(true);
+      }}
+      onClose={() => {
+        setIsFocused(false);
+      }}
+      renderInput={(params) => (
         <TextField
-            fullWidth
-            value={searchTextField}
-            onChange={(e) => setSearchTextField(e.target.value)}
-            onKeyPress={(e) => {
-              if (e.key === "Enter") {
-                handleClickSearch(searchTextField)
-              }
-            }}
-            placeholder='search'
-            color='primary'
-            variant='filled'
-            inputProps={{
-                style: {
-                    padding: '2px 5px ',
-                }
-            }}
-            InputProps={{
-                endAdornment: (
-                    <InputAdornment position="end" onClick={() => handleClickSearch(searchTextField)} >
-                        <SearchIcon />
-                    </InputAdornment>
-                ),
-            }}
-            sx={{
-                display: 'flex',
-                alignItems: 'ceter',
-                '&>.MuiFilledInput-root:before': {
-                    borderBottom: 'none'
+          {...params}
+          placeholder="Search"
+          color="primary"
+          variant="filled"
+          InputProps={{
+            endAdornment: !responsive.tablet && (
+              <SearchIcon
+                color="primary"
+                sx={{ cursor: 'pointer' }}
+                onClick={handleSearch}
+              />
+            ),
+            disableUnderline: true,
+            sx: {
+              '&.MuiInputBase-root': {
+                minWidth: responsive.tablet && '100px',
+                borderRadius: 10,
+                transition: 'all 0.3s ease-in-out',
+                '&.Mui-focused': {
+                  boxShadow: '0 0 0 1px rgba(100, 100, 100, 0.3)',
+                  height: 40,
+                  padding: '5px 5px',
                 },
-                '&>.MuiFilledInput-root:after': {
-                    borderBottom: 'none'
+                height: 32,
+                padding: '5px 5px',
+                '&:hover': {
+                  backgroundColor: '#f5f5f5',
                 },
-                '&>.css-hy97yo-MuiInputBase-root-MuiFilledInput-root:hover:not(.Mui-disabled, .Mui-error):before': { borderBottom: 'none' }
-            }}
+              },
+            },
+          }}
+          onBlur={() => setIsFocused(false)}
         />
-    )
-}
+      )}
+    />
+  );
+};
 
-export default SearchBar
+export default SearchBar;
