@@ -153,7 +153,7 @@ const ShoppingCart = () => {
 
                         <Button variant='contained'
                             color='success'
-                            onClick={() => alert('Redirecciona a metodos de pago, aun no implementado')}
+                            onClick={() => alert('Redirect to payment, not implemented')}
                             sx={{ width: '80%', m: 2 }}>
                             {goToPayment}
                         </Button>

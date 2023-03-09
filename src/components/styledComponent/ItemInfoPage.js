@@ -1,13 +1,9 @@
 import { useParams } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
-
 import { useEffect, useState } from 'react';
-
 import LoadingBar from './LoadingBar';
 import ItemCardDesk from './ItemCardDesk';
-
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import { cartItems } from '../../features/cart';
 import ItemCardMobile from './ItemCardMobile';
 
@@ -27,7 +23,7 @@ const ItemInfoPage = ({ responsive, url }) => {
     const addToCart = (item) => {
         const exists = itemsAddedToCart.find((product) => { return Number(product.id) === Number(item.id) })
         if (exists) {
-            alert('PRODUCTO YA SELECCIONADO (de momento no se controlan cantidades ni se compra mas de una unidad. En desarrollo')
+            alert('Product is already in your shopping cart')
         } else {
             dispatch(cartItems(item));
             navigate('/cart')
